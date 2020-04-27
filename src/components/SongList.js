@@ -1,20 +1,54 @@
+//all having ^^ will always be same
+
+
 // import React from 'react'
 
 // class SongList extends React.Component{
 
 // }
-import React ,{Component}from 'react'
-import {connect} from 'react-redux'
+import React, { Component } from 'react'
+import { connect } from 'react-redux' //^^
 
-
-class SongList extends Component{
-render(){
-    return <div>SongList</div>
+//Connect 
+// any time list of songs insid ethe store changes
+//Provider automaically notifies the connect function
+//connect then passes list of song to the SongLisrt
+class SongList extends Component {
+    render() {
+        console.log(this.props)
+        // this.props()=== songs:state.songs} it will shows list of songs as
+        //mapStateToProps has return   return {songs:state.songs}
+        return <div>SongList</div>
+    }
 }
+
+//mapStateToProps
+
+//mapState takes state ie all data (all reducers)object and run calculation and 
+//and that will shows as prop (ie list_of_song) to component(SOngList)
+
+// basically connect will fetch out the list of songs fro the store and pass this listOfSong as prop to the SongList
+
+//^^
+const mapStateToProps=(state)=>{
+    // this returned object will show as prop inside our component
+    return {songs:state.songs}
+    // it sending state.songs(list of songs) as a prop to SongList
+
+
+
+
+    // console.log(state)
+
+    // // sending state as a prop to SongList
+    // return state
 }
 
-export default connect()(SongList)
+//connect(mapStateToProps ) configuring coonect
 
+//^^
+export default connect(mapStateToProps)(SongList)
+//Always second argument will be our component
 
 // function connect(){
 //     return function(){
