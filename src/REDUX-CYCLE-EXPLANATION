@@ -1,0 +1,108 @@
+//PEOPLE DROPPING OFF A FORM(ACTION CREATORS)
+
+const createPolicy=(name,amount)=>{
+    return{ //Action(form in our analogy)
+        type:'CREATE_POLICY',
+        payload:{
+            name:name,
+            amount:amount
+        }
+    }
+}
+
+
+const deletePolicy=(name)=>{
+    return{
+        type:'DELETE_POLICY',
+        payload:{
+            name:name
+        }
+    }
+}
+
+const createClaim=(name,amountOfMoneyToCollect){
+    return{
+        type:'CREATE_CLAIM',
+        payload:{
+            name:name,
+            amountOfMoneyToCollect:amountOfMoneyToCollect
+        }
+    }
+}
+
+//DIAPATCH -the idea of dispatch is to take the action and create copied and send to different 
+//reducers it is automatically dorne by the redux library itself'
+.
+//REDUCERS
+// policy accounting and history
+//reducers call within action and the reducers 
+//inspect action and sees whether the reducer needs to update data based upon the action
+
+
+//OVERALL ROLE OF REDUCERS
+to take some existing data ,action 
+modify and return existing data based uopn the contents of the action
+
+
+const claimsHistory=(oldListOfClaims=[],action){
+    if(payload.type=='CREATE_CLAIM){
+        // we care about this action(FORM!)
+        return [...oldListOfClaims.action.payload]
+    }
+    //we dont care
+    return oldListOfClaims
+}
+
+
+const accounting=(bagOfMoney=100,action)=>{
+    if(action.type==='CREATE_CLAIM')
+    return bagOfMoney-action.payload.amountOfMoneyToCollect
+    else if(action.type==='CREATE_POLICY')
+    return bagOfMoney+action.payload.amount
+
+
+    return bagOfMoney;
+}
+
+const policies=(listOfPolicies=[],action){
+    if(action.type==='CREATE_POLICY')
+    return [...listOfPolicies,action.payload.name];
+    else if(action.type==='DELETE_POLICY')
+    return listOfPolicies.filter(name=>namee!==action.payload.name)
+
+return listOfPolicies
+}
+
+
+//REDUX
+//store------------------------------------------------->
+assembly of collection of reducer and actionscreator
+
+const {createStore,combineReducers}
+
+//wire up all reducers
+const ourDepartments=combineReducers({
+    accounting:accounting,
+    claimsHistory:claimsHistory,
+    policies:policies
+})
+
+const store=createStore(ourDepartments);
+
+store=== it containd entire redux appication
+it consits refrences reducers, state(data) produced by these reducers
+
+
+store.dispatch() // copy of the action and send to diff reducers whenever action is send to it
+
+const action=createPolicy('Alex',20);
+store.dispatch(action);
+//ORr
+store.dispatch(createPolicy('Alex',20))
+reducers function ran and proceese the action as soon as dispatch is called
+
+store.getState()===========all the gentaic data //central library
+//accounting:20
+// claimsHistory:bob,jim
+//policies:Alex,jim
+
