@@ -14,11 +14,27 @@ import { connect } from 'react-redux' //^^
 //Provider automaically notifies the connect function
 //connect then passes list of song to the SongLisrt
 class SongList extends Component {
+    renderList() {
+        return this.props.songs.map((song) => {
+            return (
+                <div className="item" key={song.title}>
+                    <div className="right floated content">
+                        <button className="ui button primary">
+                            Select
+                        </button>
+                    </div>
+                    <div className="content">
+                        {song.title}
+                    </div>
+                </div>
+            )
+        })
+    }
     render() {
         console.log(this.props)
         // this.props()=== songs:state.songs} it will shows list of songs as
         //mapStateToProps has return   return {songs:state.songs}
-        return <div>SongList</div>
+        return <div className="ui divided list">{this.renderList()}</div>
     }
 }
 
@@ -30,9 +46,9 @@ class SongList extends Component {
 // basically connect will fetch out the list of songs fro the store and pass this listOfSong as prop to the SongList
 
 //^^
-const mapStateToProps=(state)=>{
+const mapStateToProps = (state) => {
     // this returned object will show as prop inside our component
-    return {songs:state.songs}
+    return { songs: state.songs }
     // it sending state.songs(list of songs) as a prop to SongList
 
 
