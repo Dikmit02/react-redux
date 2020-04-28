@@ -8,6 +8,7 @@
 // }
 import React, { Component } from 'react'
 import { connect } from 'react-redux' //^^
+import { selectSong } from '../action'
 
 //Connect 
 // any time list of songs insid ethe store changes
@@ -19,7 +20,9 @@ class SongList extends Component {
             return (
                 <div className="item" key={song.title}>
                     <div className="right floated content">
-                        <button className="ui button primary">
+                        <button
+                            className="ui button primary"
+                            onClick={() => this.props.selectSong(song)}>
                             Select
                         </button>
                     </div>
@@ -45,6 +48,10 @@ class SongList extends Component {
 
 // basically connect will fetch out the list of songs fro the store and pass this listOfSong as prop to the SongList
 
+
+//whenever change some state or we run ans produce some new state 
+// it always runs with the newly created or updated state object 
+//ie when we click button
 //^^
 const mapStateToProps = (state) => {
     // this returned object will show as prop inside our component
@@ -63,7 +70,18 @@ const mapStateToProps = (state) => {
 //connect(mapStateToProps ) configuring coonect
 
 //^^
-export default connect(mapStateToProps)(SongList)
+export default connect(mapStateToProps,
+    //actioncreator is sending to the connect
+    // now tis prop will have 2 things
+    
+    //1.Action creator
+    //2.song list
+
+    {selectSong}// the coonect function is automatically calling the dispatch function behind the scene
+    //it is taking the actionobject that is being returned from the action creator nad sending it to thwe 
+    //dipatch function behind the scene and that dispatch function 
+    //always call the action craetor through this connect function
+)(SongList)
 //Always second argument will be our component
 
 // function connect(){
